@@ -26,8 +26,12 @@
         <div class="container">
             <div class="section">
                 <h5  style="font-family: 'Open Sans Condensed', sans-serif;">HAZ UNA PREGUNTA DE SÍ/NO 🤯</h5>
-                <input type="text" v-model="pregunta" placeholder="Ej. Me casaré este año?">
-    
+                
+                <div class="row">
+                    <input type="text" v-model="pregunta" class="col s11" placeholder="Ej. Me casaré este año?">
+                    <i style="margin-top: 12px;" class="material-icons" v-on:click="limpiar">cancel</i>
+                </div>
+
                 <p>{{ respuesta }}</p>
                 <img v-bind:src="imagen" width="100%">
             </div>
@@ -95,6 +99,10 @@
                             vm.respuesta = '!Error¡ La API no se pudo alcanzar. 😪' + error
                             vm.imagen = ''
                         })
+                },
+
+                limpiar: function () {
+                    this.pregunta = ''
                 }
             }
 
