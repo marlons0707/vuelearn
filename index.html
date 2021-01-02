@@ -6,31 +6,32 @@
 
     <!-- Import Google Icon Font -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300&display=swap" rel="stylesheet"> 
+
     <!-- Import materialize.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
     <title>Si / No - VueJS</title>
     <link rel="icon" href="public/favicon.ico" sizes="30x30">
-    <meta name="theme-color" content="#FFCF56">
-    
+    <meta name="theme-color" content="#009688">
+
+ 
 </head>
 <body>
 
     <div id="app">
         
         <div class="container">
-
             <div class="section">
-                <h6>HAZ UNA PREGUNTA DE SÍ/NO 🤯</h6>
+                <h4  style="font-family: 'Open Sans Condensed', sans-serif;">HAZ UNA PREGUNTA DE SÍ/NO 🤯</h4>
                 <input type="text" v-model="pregunta" placeholder="Ej. Me casaré este año?">
     
                 <p>{{ respuesta }}</p>
                 <img v-bind:src="imagen" width="100%">
             </div>
-            
-
         </div>
-
 
     </div>
 
@@ -70,7 +71,12 @@
             methods: {
                 getAnswer: function() {
                     if(this.pregunta.indexOf('?') === -1) {
-                        this.respuesta = '¡Esta no es una pregunta! 👉❓'
+                        if (this.pregunta != '') {
+                            this.respuesta = '¡Esta no es una pregunta! 👉❓'
+                        }
+                        else {
+                            this.respuesta = 'No has escrito nada 😅'
+                        }
                         this.imagen = ''
                         return
                     }
@@ -95,8 +101,6 @@
         });
 
     </script>
-
-
     
 </body>
 </html>
