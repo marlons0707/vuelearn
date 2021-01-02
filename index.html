@@ -11,6 +11,7 @@
 
     <title>Si / No - VueJS</title>
     <link rel="icon" href="public/favicon.ico" sizes="30x30">
+    <meta name="theme-color" content="#FFCF56">
     
 </head>
 <body>
@@ -20,7 +21,7 @@
         <div class="container">
 
             <div class="section">
-                <h5>Haz una pregunta de Sí/No 🤯</h5>
+                <h6>HAZ UNA PREGUNTA DE SÍ/NO 🤯</h6>
                 <input type="text" v-model="pregunta" placeholder="Ej. Me casaré este año?">
     
                 <p>{{ respuesta }}</p>
@@ -50,7 +51,7 @@
             el: '#app',
             data: {
                 pregunta: '',
-                respuesta: 'Escribe una pregunta 😅',
+                respuesta: 'No has escrito nada 😅',
                 imagen: ''
             },
 
