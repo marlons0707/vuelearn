@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Import Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Import materialize.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <title>Si / No - VueJS</title>
+    <link rel="icon" href="public/favicon.ico" sizes="30x30">
+    
+</head>
+<body>
+
+    <div id="app">
+        
+        <div class="container">
+
+            <div class="section">
+                <h5>Haz una pregunta de Sí/No 🤯</h5>
+                <input type="text" v-model="pregunta" placeholder="Ej. Me casaré este año?">
+    
+                <p>{{ respuesta }}</p>
+                <img v-bind:src="imagen" width="100%">
+            </div>
+            
+
+        </div>
+
+
+    </div>
+
+    <!-- Vue js -->
+    <!-- versión de producción, optimizada para tamaño y velocidad -->
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    
+    <!-- JavaScript at end of body for optimized loading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+
+        var observadorEjemplo = new Vue({
+
+            el: '#app',
+            data: {
+                pregunta: '',
+                respuesta: 'Escribe una pregunta 😅',
+                imagen: ''
+            },
+
+            watch: {
+                pregunta: function(nuevaPregunta, viejaPregunta) {
+                    this.respuesta = 'Escribiendo... 😲'
+                    this.imagen = ''
+                    this.debouncedGetAnswer()
+                }
+            },
+
+            created: function() {
+                this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+            },
+
+            methods: {
+                getAnswer: function() {
+                    if(this.pregunta.indexOf('?') === -1) {
+                        this.respuesta = '¡Esta no es una pregunta! 👉❓'
+                        this.imagen = ''
+                        return
+                    }
+                    
+                    this.respuesta = 'Pensando... 🤔'
+                    this.imagen = ''
+                    
+                    var vm = this
+
+                    axios.get('https://yesno.wtf/api')
+                        .then(function(response) {
+                            vm.respuesta =  (_.capitalize(response.data.answer)) == 'Yes' ? 'Sí 😁' : 'No 😳'
+                            vm.imagen = _.capitalize(response.data.image)
+                        })
+                        .catch(function(error) {
+                            vm.respuesta = '!Error¡ La API no se pudo alcanzar. 😪' + error
+                            vm.imagen = ''
+                        })
+                }
+            }
+
+        });
+
+    </script>
+
+
+    
+</body>
+</html>
+
+
